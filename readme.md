@@ -11,7 +11,7 @@ Before running the project, ensure that you have the required dependencies insta
 1. **Clone the repository** to your local machine:
 
    ```bash
-   git clone https://github.com/your-username/anemia-detection.git
+   git clone https://github.com/R0han7/anemia_project.git
 
 python -m venv venv        # Create a virtual environment (optional)
 source venv/bin/activate   # Activate the virtual environment (Mac/Linux)
