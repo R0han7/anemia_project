@@ -2,6 +2,7 @@
 FROM python:3.9.12
 EXPOSE 8080
 WORKDIR /anemia_project
+ENV PORT 8080
 
 COPY . ./
 
