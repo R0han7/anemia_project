@@ -8,6 +8,8 @@ COPY requirements.txt ./
 RUN pip install -r requirements.txt
 
 EXPOSE 8000
+
 EXPOSE 8501
+EXPOSE 8080
 
 CMD streamlit run main.py
