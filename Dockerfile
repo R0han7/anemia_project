@@ -1,14 +1,7 @@
 # Use the official Python image as the base image
 FROM python:3.9.12
-
-EXPOSE 8501
-
+EXPOSE 8080
 WORKDIR /anemia_project
-
-COPY requirements.txt ./requirements.txt
-
+COPY . ./
 RUN pip install -r requirements.txt
-
-COPY . .
-
-CMD streamlit run main.py
+ENTRYPOINT ["streamlit", "run", "main.py", "--server.port=8080", "--server.address=0.0.0.0"]
