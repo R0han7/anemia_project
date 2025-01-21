@@ -3,7 +3,7 @@ FROM python:3.9.12
 
 EXPOSE 8501
 
-WORKDIR /anemia=project
+WORKDIR /anemia_project
 
 COPY requirements.txt ./requirements.txt
 
