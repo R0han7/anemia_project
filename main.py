@@ -242,7 +242,7 @@ def load_model(model_path='best_model.pth'):
     
     model = models.resnet50(pretrained=True)
     model.fc = torch.nn.Linear(model.fc.in_features, 1)  # Output size = 1 for binary classification
-    model.load_state_dict(torch.load(model_path, map_location=torch.device('cpu'),weights_only=True))  # Adjusted for CPU usage
+    model.load_state_dict(torch.load(model_path, map_location=torch.device('cpu'),weights_only=False,encoding="ascii"))  # Adjusted for CPU usage
     model.eval()  # Set the model to evaluation mode
     return model
 
