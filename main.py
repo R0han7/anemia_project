@@ -3,16 +3,43 @@ import streamlit as st
 from PIL import Image
 import torch
 from torchvision import transforms, models
-
+import os
 # Cache the model loading for efficiency
 @st.cache_resource
 def load_model(model_path='best_model.pth'):
     
-    model = models.resnet50()
-    model.fc = torch.nn.Linear(model.fc.in_features, 1)  # Output size = 1 for binary classification
-    model.load_state_dict(torch.load(model_path, map_location=torch.device('cpu')))  # Adjusted for CPU usage
-    model.eval()  # Set the model to evaluation mode
+    if not os.path.exists(model_path):
+        raise FileNotFoundError(f"Model file not found at {model_path}")
+        
+    print(f"Loading model from {model_path}")  # Debug print
+    
+    # Initialize model
+    model = models.resnet50(weights=None)
+    model.fc = torch.nn.Linear(model.fc.in_features, 1)
+    
+    try:
+        # Load in chunks to avoid memory issues
+        checkpoint = torch.load(
+            model_path,
+            map_location='cpu',
+            weights_only=False,
+            mmap=True  # Memory-map the file
+        )
+        
+        print("Checkpoint loaded, applying to model")  # Debug print
+        model.load_state_dict(checkpoint)
+        print("State dict applied successfully")  # Debug print
+        
+    except RuntimeError as e:
+        print(f"RuntimeError: {str(e)}")
+        raise
+    except Exception as e:
+        print(f"Unexpected error: {str(e)}")
+        raise
+        
+    model.eval()
     return model
+
 
 # Preprocess image function
 def preprocess_image(image):
@@ -34,8 +61,15 @@ def predict_anemia(model, image):
     return ("Anemic", probability) if probability > 0.5 else ("Non-Anemic", probability)
 
 # Load the model
-model_path = "best_model.pth"
-model = load_model(model_path)
+try:
+    if 'model' not in st.session_state:
+        print("Loading model into session state")  # Debug print
+        st.session_state.model = load_model('best_model.pth')
+    model = st.session_state.model
+    print("Model loaded successfully")  # Debug print
+except Exception as e:
+    st.error(f"Error loading model: {str(e)}")
+
 
 # Streamlit page configuration
 # st.set_page_config(
