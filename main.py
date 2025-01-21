@@ -6,7 +6,7 @@ from torchvision import transforms, models
 import os
 # Cache the model loading for efficiency
 @st.cache_resource
-def load_model(model_path='best_model.pth'):
+def load_model(model_path='best_model.pt'):
     
     if not os.path.exists(model_path):
         raise FileNotFoundError(f"Model file not found at {model_path}")
@@ -64,7 +64,7 @@ def predict_anemia(model, image):
 try:
     if 'model' not in st.session_state:
         print("Loading model into session state")  # Debug print
-        st.session_state.model = load_model('best_model.pth')
+        st.session_state.model = load_model('best_model.pt')
     model = st.session_state.model
     print("Model loaded successfully")  # Debug print
 except Exception as e:
