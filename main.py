@@ -212,7 +212,7 @@ with col1:
         unsafe_allow_html=True,
     )
     st.image(
-        "Non-Anemic.jpeg", caption="Example of a clear image", use_column_width=True
+        "Non-Anemic.jpeg", caption="Example of a clear image", use_container_width=True
     )
     st.markdown("</div>", unsafe_allow_html=True)
 
@@ -239,7 +239,7 @@ with col2:
         )
         if uploaded_file:
             image = Image.open(uploaded_file).convert("RGB")
-            st.image(image, caption="Uploaded Image", use_column_width=True)
+            st.image(image, caption="Uploaded Image", use_container_width=True)
 
         submit = st.form_submit_button(
             "Analyze Now", help="Click after filling all fields"
