@@ -33,7 +33,7 @@ def predict_anemia(model, image):
     with torch.no_grad():
         output = model(image)
     probability = torch.sigmoid(output).item()
-    return ("Anemic", probability) if probability > 0.5 else ("Non-Anemic", probability)
+    return ("Anemic", probability) if probability > 0.75 else ("Non-Anemic", probability)
 
 # Load the model
 try:
